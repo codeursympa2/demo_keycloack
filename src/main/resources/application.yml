@@ -5,3 +5,8 @@ server.port: 8081
 logging:
   level: 
    org.springframework.security: TRACE
+   
+spring:
+  profiles:
+    active: local
+   
