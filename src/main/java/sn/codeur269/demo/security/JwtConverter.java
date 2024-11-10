@@ -16,15 +16,22 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.stereotype.Component;
 
-import lombok.RequiredArgsConstructor;
 
 @Component
-@RequiredArgsConstructor
 public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>{
 
-	private final JwtGrantedAuthoritiesConverter authoritiesConverter=new JwtGrantedAuthoritiesConverter();
-	private final JwtConverterProperties converterProperties=new JwtConverterProperties();
+	private final JwtGrantedAuthoritiesConverter authoritiesConverter;
+	private final JwtConverterProperties converterProperties;
 	
+	
+	public JwtConverter(
+			JwtConverterProperties converterProperties) {
+		super();
+		this.authoritiesConverter = new JwtGrantedAuthoritiesConverter();
+		this.converterProperties = converterProperties;
+	}
+
+
 	@Override
 	public AbstractAuthenticationToken convert(Jwt jwt) {
 		Collection<GrantedAuthority> authorities=Stream.concat(
@@ -38,7 +45,7 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
 
 	
 	private Collection<GrantedAuthority> extractRessourceRoles(Jwt jwt) {
-		Map<String, Object> ressourceAccess= jwt.getClaim("ressource_access");
+		Map<String, Object> ressourceAccess= jwt.getClaim("resource_access");
 		Map<String, Object> ressource;
 		Collection<String> ressourceRoles;
 		
@@ -51,7 +58,7 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
 		}
 		
 		return ressourceRoles.stream()
-				.map(role -> new SimpleGrantedAuthority("ROLE" + role))
+				.map(role -> new SimpleGrantedAuthority("ROLE_" + role))
 				.collect(Collectors.toSet());
 	}
 

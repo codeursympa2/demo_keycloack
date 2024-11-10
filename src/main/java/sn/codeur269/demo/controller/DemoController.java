@@ -1,5 +1,6 @@
 package sn.codeur269.demo.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,17 +10,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoController {
 	
 	@GetMapping("/home")
-	public String home(){
-		return "Hello world";
+	public ResponseEntity<String> home(){
+		return ResponseEntity.ok("Hello world");
 	}
 	
 	@GetMapping("/admin")
-	public String admin() {
-		return "Hello Admin";
+	public ResponseEntity<String> admin() {
+		return ResponseEntity.ok("Hello Admin");
 	}
 	
 	@GetMapping("/user")
-	public String user() {
-		return "Hello user";
+	public ResponseEntity<String> user() {
+		return ResponseEntity.ok("Hello user");
+	}
+	
+	@GetMapping("/user-admin")
+	public ResponseEntity<String> user_admin() {
+		return ResponseEntity.ok("Hello user & admin");
 	}
 }

@@ -1,0 +1,15 @@
+#Security config
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/DemoSpringSecurityRealm
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+          
+#Jwt Config
+jwt:
+  auth:
+    converter:
+      ressource-id: demo-keycloack-spring
+      principal-attribute: principal_username        
